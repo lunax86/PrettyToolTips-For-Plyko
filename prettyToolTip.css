@@ -1,0 +1,15 @@
+#pretty-tooltip {
+
+    display: none;
+    position: absolute;
+    background-color: #005588;
+    color: #FFFFFF;
+    border: 2px solid #000000;
+    padding: .5rem;
+    text-align: left;
+}
+
+#pretty-tooltip.show {
+    
+    display: block;
+}
