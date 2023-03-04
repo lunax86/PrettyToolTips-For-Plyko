@@ -1,5 +1,12 @@
 
-function makeToolTipElement()
+const _TOOLTIP_CONFIG_ = {
+
+    followCursor: true,
+    inheritColors: true,
+
+}
+
+function makeToolTipElement() 
 {
     let tooltip = document.createElement('div');
 
@@ -29,22 +36,41 @@ function formatToolTipText(text)
     return (formattedText += '</table>');
 }
 
+function inheritBackground(element)
+{
+    const compStyles = getComputedStyle(element);
+    const root = document.querySelector(':root');
+
+    if (compStyles.backgroundColor.includes('rgba')) {
+        root.style.setProperty('--prettyTooltip-background', 'rgb(230,230,230)');
+    } else {
+        root.style.setProperty('--prettyTooltip-background', compStyles.backgroundColor);
+    }
+}
+
+
 function addToolTipEventListener()
 {
     const tooltip = document.getElementById('pretty-tooltip');
 
     document.addEventListener('mousemove', function (event) {
+
         if (event.target === undefined) return;
-        if (
-            event.target.hasAttribute('data-tooltip') &&
-            event.target.getAttribute('data-tooltip').trim() !== ''
-        ) {
-            tooltip.classList.add('show');
+
+        if (event.target.hasAttribute('data-tooltip')) {
+
             tooltip.innerHTML = formatToolTipText(
                 event.target.getAttribute('data-tooltip')
             );
-            tooltip.style.left = event.pageX + 10 + 'px';
-            tooltip.style.top = event.pageY + 10 + 'px';
+
+            if (_TOOLTIP_CONFIG_.followCursor) {
+                tooltip.style.left = event.pageX + 10 + 'px';
+                tooltip.style.top = event.pageY + 10 + 'px';
+            }
+
+            if (_TOOLTIP_CONFIG_.inheritColors) colors = inheritBackground(event.target);
+
+            tooltip.classList.add('show');
         } else {
             tooltip.classList.remove('show');
         }
@@ -53,6 +79,8 @@ function addToolTipEventListener()
 
 function swapTitleForDataAttr(element)
 {
+    if (element.getAttribute('title').trim() === '') return;
+
     element.setAttribute('data-tooltip', element.title);
     element.removeAttribute('title');
 }

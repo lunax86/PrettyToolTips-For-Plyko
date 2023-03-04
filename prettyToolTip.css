@@ -1,15 +1,40 @@
+
+*[data-tooltip] {
+    cursor: default;
+}
+
 #pretty-tooltip {
 
-    display: none;
+    display: block;
+    visibility: hidden;
     position: absolute;
-    background-color: #005588;
-    color: #FFFFFF;
-    border: 2px solid #000000;
+    width: max-content;
     padding: .5rem;
+    min-width: 6em;
     text-align: left;
+    z-index: 100;
+    line-height: 1.1em;
+    font-size: .9rem;
+    color: #000;
+    border: 1px solid rgba(0, 0, 0, 0.3); 
+    box-shadow: rgba(0, 0, 0, 0.4) 5px 5px;
+}
+
+#pretty-tooltip:after {
+    
+    content: '';
+    position: absolute;
+    background-color: var(--prettyTooltip-background);
+    filter: contrast(33%) brightness(200%);
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
 #pretty-tooltip.show {
-    
-    display: block;
+
+    /* display: block; */
+    visibility: visible;
 }
