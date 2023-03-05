@@ -1,10 +1,10 @@
 class PrettyToolTip {
-    
+
     constructor() {
         this._TOOLTIP_CONFIG_ = {
             followCursor: true,
-            curOffsetX: 10,
-            curOffsetY: 10,
+            curOffsetX: 8,
+            curOffsetY: 8,
             inheritBackground: true,
         };
 
@@ -75,34 +75,34 @@ class PrettyToolTip {
         return (formattedText += '</table>');
     };
 
-    calcToolTipPos = (curX, curY) => {
+    calcToolTipPos = (event) => {
         const toolTipBox = this.tooltip.getBoundingClientRect();
         const pageHeight = window.innerHeight;
         const pageWidth = window.innerWidth;
 
         const pixFromLeftEdge =
-            toolTipBox.width + this._TOOLTIP_CONFIG_.curOffsetX * 2 + curX - pageWidth;
+            toolTipBox.width + this._TOOLTIP_CONFIG_.curOffsetX * 2 + event.clientX - pageWidth;
         const pixFromBottomEdge =
-            toolTipBox.height + this._TOOLTIP_CONFIG_.curOffsetY * 2 + curY - pageHeight;
+            toolTipBox.height + this._TOOLTIP_CONFIG_.curOffsetY * 2 + event.clientY - pageHeight;
 
         if (pixFromLeftEdge > 0) {
             this.tooltip.style.left =
-                pageWidth - toolTipBox.width - this._TOOLTIP_CONFIG_.curOffsetX + 'px';
+            event.pageX - pixFromLeftEdge + this._TOOLTIP_CONFIG_.curOffsetX + 'px';
         } else {
-            this.tooltip.style.left = curX + this._TOOLTIP_CONFIG_.curOffsetX + 'px';
+            this.tooltip.style.left = event.pageX + this._TOOLTIP_CONFIG_.curOffsetX + 'px';
         }
 
         if (pixFromBottomEdge > 0) {
             this.tooltip.style.top =
-                curY - this._TOOLTIP_CONFIG_.curOffsetY - toolTipBox.height + 'px';
+            event.pageY - this._TOOLTIP_CONFIG_.curOffsetY - toolTipBox.height + 'px';
         } else {
-            this.tooltip.style.top = curY + this._TOOLTIP_CONFIG_.curOffsetY + 'px';
+            this.tooltip.style.top = event.pageY + this._TOOLTIP_CONFIG_.curOffsetY + 'px';
         }
     };
 
     updateToolTip = (event) => {
         this.tooltip.innerHTML = this.formatToolTipText(event.target.getAttribute('data-tooltip'));
-        if (this._TOOLTIP_CONFIG_.followCursor) this.calcToolTipPos(event.clientX, event.clientY);
+        if (this._TOOLTIP_CONFIG_.followCursor) this.calcToolTipPos(event);
 
         if (this._TOOLTIP_CONFIG_.inheritBackground) this.inheritBackground(event.target);
     };
