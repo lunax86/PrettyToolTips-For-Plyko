@@ -3,6 +3,10 @@
     cursor: default;
 }
 
+*[data-tooltip] > *:not(a) {
+    pointer-events: none;
+}
+
 #pretty-tooltip {
 
     display: block;
