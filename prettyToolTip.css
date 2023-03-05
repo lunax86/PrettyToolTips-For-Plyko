@@ -1,5 +1,5 @@
 
-*[data-tooltip] {
+*[data-tooltip]:not(a) {
     cursor: default;
 }
 
@@ -24,7 +24,7 @@
     
     content: '';
     position: absolute;
-    background-color: var(--prettyTooltip-background);
+    background-color: var(--pretty-tooltip-background);
     filter: contrast(33%) brightness(200%);
     z-index: -1;
     top: 0;
