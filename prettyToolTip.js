@@ -14,19 +14,14 @@ class PrettyToolTip {
 
         this.tooltip = document.getElementById('pretty-tooltip');
         this.root = document.querySelector(':root');
-        this.root.style.setProperty(
-            '--pretty-tooltip-background',
-            'rgb(89, 89, 89)'
-        );
+        this.root.style.setProperty('--pretty-tooltip-background', 'rgb(89, 89, 89)');
     }
 
     init = () => {
         const elements = document.querySelectorAll('*[title]');
 
         if (elements.length === 0) {
-            console.warn(
-                'PrettyToolTip: Not a single element with title attribute found.'
-            );
+            console.warn('PrettyToolTip: Not a single element with title attribute found.');
             return;
         }
 
@@ -54,15 +49,9 @@ class PrettyToolTip {
         const compStyles = getComputedStyle(element);
 
         if (compStyles.backgroundColor.includes('rgba')) {
-            this.root.style.setProperty(
-                '--pretty-tooltip-background',
-                'rgb(89, 89, 89)'
-            );
+            this.root.style.setProperty('--pretty-tooltip-background', 'rgb(89, 89, 89)');
         } else {
-            this.root.style.setProperty(
-                '--pretty-tooltip-background',
-                compStyles.backgroundColor
-            );
+            this.root.style.setProperty('--pretty-tooltip-background', compStyles.backgroundColor);
         }
     };
 
@@ -87,42 +76,39 @@ class PrettyToolTip {
     };
 
     calcToolTipPos = (curX, curY) => {
-
         const toolTipBox = this.tooltip.getBoundingClientRect();
         const pageHeight = window.innerHeight;
         const pageWidth = window.innerWidth;
 
-        const pixFromLeftEdge = toolTipBox.width + this._TOOLTIP_CONFIG_.curOffsetX * 2 + curX - pageWidth;
-        const pixFromBottomEdge = toolTipBox.height + this._TOOLTIP_CONFIG_.curOffsetY * 2 + curY - pageHeight;
+        const pixFromLeftEdge =
+            toolTipBox.width + this._TOOLTIP_CONFIG_.curOffsetX * 2 + curX - pageWidth;
+        const pixFromBottomEdge =
+            toolTipBox.height + this._TOOLTIP_CONFIG_.curOffsetY * 2 + curY - pageHeight;
 
         if (pixFromLeftEdge > 0) {
-            this.tooltip.style.left = pageWidth - toolTipBox.width - this._TOOLTIP_CONFIG_.curOffsetX + 'px';
+            this.tooltip.style.left =
+                pageWidth - toolTipBox.width - this._TOOLTIP_CONFIG_.curOffsetX + 'px';
         } else {
             this.tooltip.style.left = curX + this._TOOLTIP_CONFIG_.curOffsetX + 'px';
         }
 
-        if (pixFromBottomEdge > 0 ) {
-            this.tooltip.style.top = curY - this._TOOLTIP_CONFIG_.curOffsetY - toolTipBox.height + 'px';
+        if (pixFromBottomEdge > 0) {
+            this.tooltip.style.top =
+                curY - this._TOOLTIP_CONFIG_.curOffsetY - toolTipBox.height + 'px';
         } else {
-             this.tooltip.style.top = curY + this._TOOLTIP_CONFIG_.curOffsetY + 'px';
+            this.tooltip.style.top = curY + this._TOOLTIP_CONFIG_.curOffsetY + 'px';
         }
-        
     };
 
     updateToolTip = (event) => {
-        this.tooltip.innerHTML = this.formatToolTipText(
-            event.target.getAttribute('data-tooltip')
-        );
-        if (this._TOOLTIP_CONFIG_.followCursor)
-            this.calcToolTipPos(event.clientX, event.clientY);
+        this.tooltip.innerHTML = this.formatToolTipText(event.target.getAttribute('data-tooltip'));
+        if (this._TOOLTIP_CONFIG_.followCursor) this.calcToolTipPos(event.clientX, event.clientY);
 
-        if (this._TOOLTIP_CONFIG_.inheritBackground)
-            this.inheritBackground(event.target);
+        if (this._TOOLTIP_CONFIG_.inheritBackground) this.inheritBackground(event.target);
     };
 
     addToolTipEventListener = () => {
         document.addEventListener('mousemove', (event) => {
-
             if (event.target.hasAttribute === undefined) return;
 
             if (event.target.hasAttribute('data-tooltip')) {
