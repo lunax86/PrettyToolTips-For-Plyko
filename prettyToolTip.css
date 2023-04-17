@@ -1,20 +1,20 @@
 
 *[data-tooltip]:not(a) {
+
     cursor: default;
 }
 
 *[data-tooltip] > *:not(a) {
+
     pointer-events: none;
 }
 
 #pretty-tooltip {
 
-    display: block;
-    visibility: hidden;
+    display: none;
     position: absolute;
     width: max-content;
-    padding: .5rem;
-    min-width: 6em;
+    min-width: 1em;
     text-align: left;
     z-index: 100;
     line-height: 1.1em;
@@ -39,6 +39,45 @@
 
 #pretty-tooltip.show {
 
-    /* display: block; */
-    visibility: visible;
+    display: block;
+}
+
+#pretty-tooltip .table {
+
+    display: table;
+    width: 100%;
+}
+
+#pretty-tooltip .table-row {
+
+    display: table-row;
+    position: relative;
+}
+
+#pretty-tooltip .table-row:nth-child(odd)::after {
+
+    content: '';
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.08);
+}
+
+#pretty-tooltip .table-cell {
+
+    display: table-cell;
+    padding: .2rem .8rem;
+}
+
+#pretty-tooltip .table-cell:first-child {
+
+    padding-left: .2rem;
+}
+
+#pretty-tooltip .table-cell:last-child {
+
+    padding-right: .2rem;
 }

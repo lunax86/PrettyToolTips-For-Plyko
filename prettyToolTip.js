@@ -56,23 +56,24 @@ class PrettyToolTip {
     };
 
     formatToolTipText = (text) => {
-        let formattedText = '<table>';
+        let formattedText = '<div class="table">';
 
         const rows = text.split(/\r?\n/);
 
         rows.forEach((row) => {
             if (row.trim() === '') return;
 
-            formattedText += '<tr>';
+            formattedText += '<div class="table-row">';
 
             row.split(':').forEach((cell) => {
-                formattedText += '<td>' + cell + '</td>';
+                if (cell.trim() === '') return;
+                formattedText += '<div class="table-cell">' + cell + '</div>';
             });
 
-            formattedText += '</tr>';
+            formattedText += '</div>';
         });
 
-        return (formattedText += '</table>');
+        return (formattedText += '</div>');
     };
 
     calcToolTipPos = (event) => {
@@ -121,5 +122,5 @@ class PrettyToolTip {
     };
 }
 
-var prettyTooltip = new PrettyToolTip();
+let prettyTooltip = new PrettyToolTip();
 prettyTooltip.init();
